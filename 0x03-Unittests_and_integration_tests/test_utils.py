@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+parameterize a unit testes
+"""
 
 import unittest
 from unittest.mock import patch, Mock
