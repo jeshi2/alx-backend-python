@@ -22,17 +22,27 @@ class TestAccessNestedMap(unittest.TestCase):
             expected_result) -> None:
         """
         Test the access_nested_map function with various inputs.
-
-        Args:
-            nested_map (dict): The nested map to be accessed.
-            path (tuple): The path to the desired value in the nested map.
-            expected_result: The expected result after accessing
-            the nested map.
-
-        Returns:
-            None
         """
         self.assertEqual(access_nested_map(nested_map, path), expected_result)
+
+    @parameterized.expand([
+        ({}, ("a",), KeyError, "Key not found: 'a'"),
+        ({"a": 1}, ("a", "b"), KeyError, "Key not found: 'b'"),
+    ])
+    def test_access_nested_map_exception(
+            self,
+            nested_map,
+            path,
+            expected_exception,
+            expected_message):
+        """
+        Test that accessing a non-existing key raises a KeyError with
+        the expected message.
+        """
+        with self.assertRaises(expected_exception) as context:
+            access_nested_map(nested_map, path)
+
+        self.assertEqual(str(context.exception), expected_message)
 
 
 if __name__ == "__main__":
