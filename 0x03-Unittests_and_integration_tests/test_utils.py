@@ -77,23 +77,26 @@ class TestMemoize(unittest.TestCase):
     Test case for the memoize decorator in the utils module.
     """
 
-    class TestClass:
-        """
-        Test class with a_method and a_property decorated with memoize.
-        """
+    def test_memoize(self):
+        """ memoize test """
 
-        def a_method(self):
-            return 42
+        class TestClass:
+            """
+            Test class with a_method and a_property decorated with memoize.
+            """
 
-        @memoize
-        def a_property(self):
-            return self.a_method()
+            def a_method(self):
+                return 42
 
-    with patch.object(TestClass, 'a_method') as mocked:
-        spec = TestClass()
-        spec.a_property
-        spec.a_property
-        mocked.asset_called_once()
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method') as mock:
+            test = TestClass()
+            test.a_property()
+            test.a_property()
+            mock.assert_called_once()
 
 
 if __name__ == "__main__":
